@@ -335,7 +335,7 @@
 
     "dc1NICName": "[concat('DC1-Nic',resourceGroup().name)]",
     "dc2NICName": "[concat('DC2-Nic',resourceGroup().name)]",
-    "adcsNICName": "[concat('ADCS-Nic',resourceGroup().name)],",
+    "adcsNICName": "[concat('ADCS-Nic',resourceGroup().name)]",
     "paw1NICName": "[concat('PAW1-Nic',resourceGroup().name)]",
     "paw2NICName": "[concat('PAW2-Nic',resourceGroup().name)]",
     "paw3NICName": "[concat('PAW3-Nic',resourceGroup().name)]",
