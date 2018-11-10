@@ -222,8 +222,7 @@
     "primaryGW2IpAddress": "[concat(parameters('vNetIPSpace'),'.3.18')]",
     "primaryAADProxy1IpAddress": "[concat(parameters('vNetIPSpace'),'.3.20')]",
     "primaryAADProxy2IpAddress": "[concat(parameters('vNetIPSpace'),'.3.21')]",
-    "ilbADFSprivateIPAddress": "[concat(parameters('vNetIPSpace'),'.5.100')]",
-    "ilbADFSProxyprivateIPAddress": "[concat(parameters('vNetIPSpace'),'.6.100')]",
+   
     "ilbRDSCBprivateIPAddress": "[concat(parameters('vNetIPSpace'),'.3.100')]",
     "ilbRDSGWprivateIPAddress": "[concat(parameters('vNetIPSpace'),'.3.101')]",
 
