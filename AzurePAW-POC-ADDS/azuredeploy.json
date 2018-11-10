@@ -787,7 +787,6 @@
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2015-01-01",
       "dependsOn": [
-        "[variables('updateVNetDNS1')]",
         "[variables('DIADouGPODeployment')]"
       ],
       "properties": {
@@ -840,7 +839,6 @@
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2015-01-01",
       "dependsOn": [
-        "[variables('updateVNetDNS1')]",
         "[variables('DIADouGPODeployment')]"
       ],
       "properties": {
@@ -893,7 +891,6 @@
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2015-01-01",
       "dependsOn": [
-        "[variables('updateVNetDNS1')]",
         "[variables('DIADouGPODeployment')]"
       ],
       "properties": {
@@ -946,7 +943,6 @@
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2015-01-01",
       "dependsOn": [
-        "[variables('updateVNetDNS1')]",
         "[variables('DIADouGPODeployment')]"
       ],
       "properties": {
@@ -999,7 +995,6 @@
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2015-01-01",
       "dependsOn": [
-        "[variables('updateVNetDNS1')]",
         "[variables('DIADouGPODeployment')]"
       ],
       "properties": {
@@ -1052,7 +1047,6 @@
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2015-01-01",
       "dependsOn": [
-        "[variables('updateVNetDNS1')]",
         "[variables('DIADouGPODeployment')]"
       ],
       "properties": {
@@ -1105,7 +1099,6 @@
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2015-01-01",
       "dependsOn": [
-        "[variables('updateVNetDNS1')]",
         "[variables('DIADouGPODeployment')]"
       ],
       "properties": {
@@ -1158,7 +1151,6 @@
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2015-01-01",
       "dependsOn": [
-        "[variables('updateVNetDNS1')]",
         "[variables('DIADouGPODeployment')]"
       ],
       "properties": {
@@ -1211,7 +1203,6 @@
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2015-01-01",
       "dependsOn": [
-        "[variables('updateVNetDNS1')]",
         "[variables('DIADouGPODeployment')]"
       ],
       "properties": {
