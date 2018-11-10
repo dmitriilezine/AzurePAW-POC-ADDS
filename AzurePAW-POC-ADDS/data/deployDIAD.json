@@ -1,0 +1,96 @@
+﻿{
+  "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "VMName": {
+      "type": "string",
+      "metadata": {
+        "description": "The VM name of Primary AD"
+      }
+    },
+    "domainName": {
+      "type": "string",
+      "metadata": {
+        "description": "The domain name"
+      }
+    },
+    "adminUsername": {
+      "type": "string",
+      "metadata": {
+        "description": "The name of the Administrator of the new VMs and Domain"
+      }
+    },
+    "adminPassword": {
+      "type": "securestring",
+      "metadata": {
+        "description": "The password for the Administrator account of the new VMs and Domain"
+      }
+    },
+    "adcsVMName": {
+      "type": "string",
+      "metadata": {
+        "description": "The VM name of ADCS Server"
+      }
+    },
+    "assetLocationStorageAccount": {
+      "type": "string",
+      "metadata": {
+        "description": "The location of resources that the script is dependent on such as linked templates and DSC modules"
+      }
+    },
+    "storageAccountKeyviaKeyvault": {
+      "type": "securestring",
+      "metadata": {
+        "description": "Key for the Storage account"
+      }
+    }
+  },
+  "variables": {
+    "psScriptURL": "[concat(parameters('assetLocationStorageAccount'),'/scripts/ExtendAD-DIAD.ps1')]",
+    "psDIADScriptZipPackageURL": "[concat(parameters('assetLocationStorageAccount'),'/scripts/ExportImportAD.zip')]",
+    "psScriptCertTemplatesZipPackageURL": "[concat(parameters('assetLocationStorageAccount'),'/scripts/createCertTemplates.zip')]",
+    "psScriptADFSDeltaURL": "[concat(parameters('assetLocationStorageAccount'),'/scripts/ADFSDeltaGPO.zip')]",
+
+    "ouoldold": "[concat('CN=Users,DC=contoso,DC=com')]",
+    "ouOLD": "[concat('DC=contoso,DC=com')]",
+    "upnOLD": "[concat('contoso.com')]",
+    "shortDomainName": "[split(parameters('domainName'),'.')[0]]",
+    "domainSuffix": "[split(parameters('domainName'),'.')[1]]",
+    "ou": "[concat('DC=',variables('shortDomainName'),',DC=',variables('domainSuffix'))]",
+    "upn": "[concat(parameters('domainName'))]",
+    "Tier0ServerOperators": "Tier0ServerOperators",
+    "ADFSsvcAccount": "svc-ADFS",
+    "ServiceAccountsOU": "[concat('OU=T0-Service Accounts; OU=Tier 0; OU=Admin;', 'DC=',variables('shortDomainName'),'; DC=',variables('domainSuffix'))]"
+
+
+  },
+  "resources": [
+    {
+      "name": "[concat(parameters('VMName'),'/deployDIAD')]",
+      "comments": "deploy DIAD via Script extension",
+      "type": "Microsoft.Compute/virtualMachines/extensions",
+      "location": "[resourceGroup().location]",
+      "apiVersion": "2015-06-15",
+      "properties": {
+        "publisher": "Microsoft.Compute",
+        "type": "CustomScriptExtension",
+        "typeHandlerVersion": "1.9",
+        "autoUpgradeMinorVersion": true,
+        "settings": {
+          "fileUris": [
+            "[variables('psScriptURL')]",
+            "[variables('psDIADScriptZipPackageURL')]",
+            "[variables('psScriptCertTemplatesZipPackageURL')]",
+            "[variables('psScriptADFSDeltaURL')]"
+          ]
+        },
+        "protectedSettings": {
+          "commandToExecute": "[concat('powershell -ExecutionPolicy Unrestricted -File ExtendAD-DIAD.ps1 -user ',parameters('adminUsername'),' -password ',parameters('adminPassword'),' -CAName ',parameters('adcsVMName'),' -domainname ',parameters('domainName'),' -shortname ',variables('shortDomainName'),' -ou ',variables('ou'),' -group ',variables('Tier0ServerOperators'),' -svcADFS ',variables('ADFSsvcAccount'),' -ServiceAccountsOU ',variables('ServiceAccountsOU'),' -upn ',variables('upn'),'')]",
+          "storageAccountName": "azurepaw",
+          "storageAccountKey": "[parameters('storageAccountKeyviaKeyvault')]"
+        }
+      }
+    }
+  ],
+  "outputs": {}
+}
