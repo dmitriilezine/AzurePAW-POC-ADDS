@@ -227,7 +227,6 @@
     "ilbRDSCBprivateIPAddress": "[concat(parameters('vNetIPSpace'),'.3.100')]",
     "ilbRDSGWprivateIPAddress": "[concat(parameters('vNetIPSpace'),'.3.101')]",
 
-
     "ilbTemplateURL": "[concat(variables('assetLocation'),'/data/ilbDeployment.json')]",
     "dc1TemplateURL": "[concat(variables('assetLocation'),'/data/dc1Vm.json')]",
     "dc2TemplateURL": "[concat(variables('assetLocation'),'/data/dc2Vm.json')]",
