@@ -75,6 +75,7 @@
             "CACommonName": "[variables('CACommonName')]",
             "DSDomainDN": "[variables('DSDomainDN')]",
             "CAName": "[parameters('adcsVMName')]",
+            "shortDomainName": "[variables('shortDomainName')]",
             "adminCreds": {
               "userName": "[parameters('adminUserName')]",
               "password": "PrivateSettingsRef:adminPassword"
