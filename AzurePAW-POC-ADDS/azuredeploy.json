@@ -198,11 +198,18 @@
         "description": "Must be compliant with Windows Server naming convention"
       },
       "defaultValue": "AADP2-LAB"
+    },
+    "ScriptsLocation": {
+      "type": "string",
+      "metadata": {
+        "description": "Storage account for scripts"
+      },
+      "defaultValue": "https://azurepaw.blob.core.windows.net"
     }
   },
   "variables": {
     "assetLocation": "https://raw.githubusercontent.com/dmitriilezine/AzurePAW-POC-ADDS/master/AzurePAW-POC-ADDS",
-    "assetLocationStorageAccount": "https://azurepaw.blob.core.windows.net",
+    "assetLocationStorageAccount": "[parameters('ScriptsLocation')]",
     "VMSize": "[parameters('VirtualMachineSize')]",
     "OSVersion": "2016-Datacenter",
     "numberOfRdshInstances": 2,
@@ -222,7 +229,7 @@
     "primaryGW2IpAddress": "[concat(parameters('vNetIPSpace'),'.3.18')]",
     "primaryAADProxy1IpAddress": "[concat(parameters('vNetIPSpace'),'.3.20')]",
     "primaryAADProxy2IpAddress": "[concat(parameters('vNetIPSpace'),'.3.21')]",
-   
+
     "ilbRDSCBprivateIPAddress": "[concat(parameters('vNetIPSpace'),'.3.100')]",
     "ilbRDSGWprivateIPAddress": "[concat(parameters('vNetIPSpace'),'.3.101')]",
 
@@ -231,7 +238,7 @@
     "dc2TemplateURL": "[concat(variables('assetLocation'),'/data/dc2Vm.json')]",
     "adcsVMTemplateURL": "[concat(variables('assetLocation'),'/data/adcsVm.json')]",
     "AzurePAW1VMTemplateURL": "[concat(variables('assetLocation'),'/data/AdminHost1VM.json')]",
-    
+
     "deployPrimaryAdTemplateURL": "[concat(variables('assetLocation'),'/data/deployPrimaryAD.json')]",
     "deployDC2AdTemplateURL": "[concat(variables('assetLocation'),'/data/promoteSecondDC.json')]",
     "deployADCSTemplateURL": "[concat(variables('assetLocation'),'/data/deployADCS.json')]",
@@ -318,7 +325,7 @@
     "secretnameSASurl": "AzurePAWPOC1SAS",
     "KeyVaultRG": "[parameters('KeyVaultRG')]",
     "keyVaultID": "[concat('/subscriptions/', parameters('subscriptionID'), '/resourceGroups/', variables('KeyVaultRG'), '/providers/Microsoft.KeyVault/vaults/', variables('vaultName'))]",
-    
+
     "imageOffer": "WindowsServer",
     "imagePublisher": "MicrosoftWindowsServer",
 
