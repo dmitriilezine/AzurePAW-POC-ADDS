@@ -73,16 +73,17 @@
       "type": "string",
       "allowedValues": [
         "Standard_DS12_v2",
+        "Standard_D8S_v3",
         "Standard_A2"
       ],
       "metadata": {
         "description": "VM Size. The bigger it is, the more $ you will spend."
       },
-      "defaultValue": "Standard_A2"
+      "defaultValue": "Standard_D8S_v3"
     },
     "deployRDS": {
       "type": "string",
-      "defaultValue": "Yes",
+      "defaultValue": "No",
       "allowedValues": [
         "No",
         "Yes"
@@ -93,26 +94,13 @@
     },
     "deployAADAppProxy": {
       "type": "string",
-      "defaultValue": "Yes",
+      "defaultValue": "No",
       "allowedValues": [
         "No",
         "Yes"
       ],
       "metadata": {
         "description": "Deploy AAD App Proxy"
-      }
-    },
-    "vNetIPSpace": {
-      "type": "string",
-      "defaultValue": "10.0",
-      "allowedValues": [
-        "10.0",
-        "10.1",
-        "10.2",
-        "10.3"
-      ],
-      "metadata": {
-        "description": "Specify the IP space for the vNet where this deployment will be installed."
       }
     },
     "DC1VMName": {
@@ -199,6 +187,40 @@
       },
       "defaultValue": "AADP2-LAB"
     },
+    "vNetIPSpace": {
+      "type": "string",
+      "defaultValue": "10.0",
+      "allowedValues": [
+        "10.0",
+        "10.1",
+        "10.2",
+        "10.3"
+      ],
+      "metadata": {
+        "description": "Specify the IP space for the vNet where this deployment will be installed."
+      }
+    },
+    "DC1IPAddress": {
+      "type": "string",
+      "metadata": {
+        "description": "IP Address for DC 1"
+      },
+      "defaultValue": "10.0.1.4"
+    },
+    "DC2IPAddress": {
+      "type": "string",
+      "metadata": {
+        "description": "IP Address for DC 2"
+      },
+      "defaultValue": "10.0.1.5"
+    },
+    "ADCSIPAddress": {
+      "type": "string",
+      "metadata": {
+        "description": "IP Address for PKI server"
+      },
+      "defaultValue": "10.0.1.6"
+    },
     "ScriptsLocation": {
       "type": "string",
       "metadata": {
@@ -217,9 +239,9 @@
     "ADDSsubnetResourceID": "[resourceId(parameters('existingVirtualNetworkResourceGroup'), 'Microsoft.Network/virtualNetworks/subnets', parameters('existingVirtualNetworkName'), parameters('DomainControllersSubnetName'))]",
     "RDSsubnetResourceID": "[resourceId(parameters('existingVirtualNetworkResourceGroup'), 'Microsoft.Network/virtualNetworks/subnets', parameters('existingVirtualNetworkName'), parameters('RdsSubnetName'))]",
 
-    "primaryDC1IpAddress": "[concat(parameters('vNetIPSpace'),'.1.4')]",
-    "primaryDC2IpAddress": "[concat(parameters('vNetIPSpace'),'.1.5')]",
-    "primaryADCSIpAddress": "[concat(parameters('vNetIPSpace'),'.1.6')]",
+    "primaryDC1IpAddress": "[parameters('DC1IPAddress')]",
+    "primaryDC2IpAddress": "[parameters('DC2IPAddress')]",
+    "primaryADCSIpAddress": "[parameters('ADCSIPAddress')]",
     "primaryAzurePAW1IpAddress": "[concat(parameters('vNetIPSpace'),'.3.4')]",
     "primaryAzurePAW2IpAddress": "[concat(parameters('vNetIPSpace'),'.3.5')]",
     "primaryAzurePAW3IpAddress": "[concat(parameters('vNetIPSpace'),'.3.6')]",
