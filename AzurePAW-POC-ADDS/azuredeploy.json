@@ -541,6 +541,9 @@
           },
           "adAvailabilitySetName": {
             "value": "[variables('adAvailabilitySetName')]"
+          },
+          "diagnosticsStorageAccountName": {
+            "value": "[parameters('diagnosticsStorageAccountName')]"
           }
         }
       }
@@ -640,6 +643,9 @@
           },
           "adAvailabilitySetName": {
             "value": "[variables('adAvailabilitySetName')]"
+          },
+          "diagnosticsStorageAccountName": {
+            "value": "[parameters('diagnosticsStorageAccountName')]"
           }
         }
       }

@@ -87,6 +87,12 @@
       "metadata": {
         "description": "Availability set for AD VMs"
       }
+    },
+    "diagnosticsStorageAccountName": {
+      "type": "string",
+      "metadata": {
+        "description": "Storage account for VM diagnostics"
+      }
     }
   },
   "variables": {
@@ -154,6 +160,12 @@
               "lun": 0
             }
           ]
+        },
+        "diagnosticsProfile": {
+          "bootDiagnostics": {
+            "enabled": true,
+            "storageUri": "[concat('https://', parameters('diagnosticsStorageAccountName'), '.blob.core.windows.net/')]"
+          }
         },
         "networkProfile": {
           "networkInterfaces": [
