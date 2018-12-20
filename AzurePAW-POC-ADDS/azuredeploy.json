@@ -250,8 +250,8 @@
     "OSVersion": "2016-Datacenter",
     "numberOfRdshInstances": 2,
 
-    "ADDSsubnetResourceID": "[resourceId(parameters('existingVirtualNetworkResourceGroup'), 'Microsoft.Network/virtualNetworks/subnets', parameters('existingVirtualNetworkName'), parameters('DomainControllersSubnetName'))]",
-    "RDSsubnetResourceID": "[resourceId(parameters('existingVirtualNetworkResourceGroup'), 'Microsoft.Network/virtualNetworks/subnets', parameters('existingVirtualNetworkName'), parameters('RdsSubnetName'))]",
+    "ADDSsubnetResourceID": "[resourceId(parameters('existingVirtualNetworkRG'), 'Microsoft.Network/virtualNetworks/subnets', parameters('existingVirtualNetworkName'), parameters('DomainControllersSubnetName'))]",
+    "RDSsubnetResourceID": "[resourceId(parameters('existingVirtualNetworkRG'), 'Microsoft.Network/virtualNetworks/subnets', parameters('existingVirtualNetworkName'), parameters('RdsSubnetName'))]",
 
     "primaryDC1IpAddress": "[parameters('DC1IPAddress')]",
     "primaryDC2IpAddress": "[parameters('DC2IPAddress')]",
