@@ -15,7 +15,6 @@
         "description": "Storage account for VM diagnostics"
       }
     },
-
     "accountid": {
       "type": "string",
       "metadata": {
