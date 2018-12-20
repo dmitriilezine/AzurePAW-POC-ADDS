@@ -31,6 +31,7 @@
     <None Include="data\dc2Vm.json" />
     <None Include="data\deployAADProxy.json" />
     <None Include="data\deployADCS.json" />
+    <None Include="data\deployAntimalware.json" />
     <None Include="data\deployDIAD.json" />
     <None Include="data\deployPrimaryAD.json" />
     <None Include="data\deployRDCB.json" />
@@ -38,6 +39,7 @@
     <None Include="data\deployRDSH.json" />
     <None Include="data\ilbDeployment.json" />
     <None Include="data\promoteSecondDC.json" />
+    <None Include="data\vmDiagnostics.json" />
     <None Include="Deployment.targets">
       <Visible>False</Visible>
     </None>

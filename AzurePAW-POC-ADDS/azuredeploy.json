@@ -227,6 +227,20 @@
         "description": "Storage account for scripts"
       },
       "defaultValue": "https://azurepaw.blob.core.windows.net"
+    },
+    "diagnosticsStorageAccountName": {
+      "type": "string",
+      "defaultValue": "RealStorageAccountName",
+      "metadata": {
+        "description": "Specify storage account that will be used for VM diagnostics"
+      }
+    },
+    "StorageAccountRG": {
+      "type": "string",
+      "defaultValue": "RG where Storage account is located",
+      "metadata": {
+        "description": "Specify storage account RG"
+      }
     }
   },
   "variables": {
@@ -269,6 +283,8 @@
     "deployRDGWTemplateURL": "[concat(variables('assetLocation'),'/data/deployRDGW.json')]",
     "deployRDSHTemplateURL": "[concat(variables('assetLocation'),'/data/deployRDSH.json')]",
     "deployAADProxyTemplateURL": "[concat(variables('assetLocation'),'/data/deployAADProxy.json')]",
+    "vmDiagnosticsTemplateURL": "[concat(variables('assetLocation'),'/data/vmDiagnostics.json')]",
+    "vmAntimalwareTemplateURL": "[concat(variables('assetLocation'),'/data/deployAntimalware.json')]",
 
     "dc1VMName": "[parameters('DC1VMName')]",
     "dc2VMName": "[parameters('DC2VMName')]",
@@ -311,6 +327,17 @@
 
     "DIADouGPODeployment": "DeployDIAD-OUs-GPOs",
     "DIADouGPODeploymentId": "[concat('Microsoft.Resources/deployments/', variables('DIADouGPODeployment'))]",
+
+    "deployVMDiagnosticsDC1": "deployVMDiagnosticsDC1",
+    "deployVMDiagnosticsDC1Id": "[concat('Microsoft.Resources/deployments/', variables('deployVMDiagnosticsDC1'))]",
+    "deployAntimalwareDC1": "deployAntimalwareDC1",
+    "deployAntimalwareDC1Id": "[concat('Microsoft.Resources/deployments/', variables('deployAntimalwareDC1'))]",
+    "deployVMDiagnosticsDC2": "deployVMDiagnosticsDC2",
+    "deployVMDiagnosticsDC2Id": "[concat('Microsoft.Resources/deployments/', variables('deployVMDiagnosticsDC2'))]",
+    "deployAntimalwareDC2": "deployAntimalwareDC2",
+    "deployAntimalwareDC2Id": "[concat('Microsoft.Resources/deployments/', variables('deployAntimalwareDC2'))]",
+
+
     "cb1VMDeployment": "CreateCB1VM",
     "cb1VMDeploymentId": "[concat('Microsoft.Resources/deployments/', variables('cb1VMDeployment'))]",
     "cb2VMDeployment": "CreateCB2VM",
@@ -347,6 +374,8 @@
     "secretnameSASurl": "AzurePAWPOC1SAS",
     "KeyVaultRG": "[parameters('KeyVaultRG')]",
     "keyVaultID": "[concat('/subscriptions/', parameters('subscriptionID'), '/resourceGroups/', variables('KeyVaultRG'), '/providers/Microsoft.KeyVault/vaults/', variables('vaultName'))]",
+
+    "accountid": "[concat('/subscriptions/', subscription().subscriptionId, '/resourceGroups/',parameters('StorageAccountRG'), '/providers/','Microsoft.Storage/storageAccounts/', parameters('diagnosticsStorageAccountName'))]",
 
     "imageOffer": "WindowsServer",
     "imagePublisher": "MicrosoftWindowsServer",
@@ -1543,8 +1572,99 @@
           }
         }
       }
+    },
+    {
+      "name": "[variables('deployVMDiagnosticsDC1')]",
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2015-01-01",
+      "dependsOn": [
+        "[variables('dc1VmDeployment')]"
+      ],
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[variables('vmDiagnosticsTemplateURL')]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "vmName": {
+            "value": "[variables('dc1VMName')]"
+          },
+          "diagnosticsStorageAccountName": {
+            "value": "[parameters('diagnosticsStorageAccountName')]"
+          },
+          "accountid": {
+            "value": "[variables('accountid')]"
+          }
+        }
+      }
+    },
+    {
+      "name": "[variables('deployAntimalwareDC1')]",
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2015-01-01",
+      "dependsOn": [
+        "[variables('dc1VmDeployment')]"
+      ],
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[variables('vmAntimalwareTemplateURL')]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "vmName": {
+            "value": "[variables('dc1VMName')]"
+          }
+        }
+      }
+    },
+    {
+      "name": "[variables('deployVMDiagnosticsDC2')]",
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2015-01-01",
+      "dependsOn": [
+        "[variables('dc2VmDeployment')]"
+      ],
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[variables('vmDiagnosticsTemplateURL')]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "vmName": {
+            "value": "[variables('dc2VMName')]"
+          },
+          "diagnosticsStorageAccountName": {
+            "value": "[parameters('diagnosticsStorageAccountName')]"
+          },
+          "accountid": {
+            "value": "[variables('accountid')]"
+          }
+        }
+      }
+    },
+    {
+      "name": "[variables('deployAntimalwareDC2')]",
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2015-01-01",
+      "dependsOn": [
+        "[variables('dc2VmDeployment')]"
+      ],
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[variables('vmAntimalwareTemplateURL')]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "vmName": {
+            "value": "[variables('dc2VMName')]"
+          }
+        }
+      }
     }
-
   ],
   "outputs": {}
 }
